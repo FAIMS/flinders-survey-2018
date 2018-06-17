@@ -1,0 +1,150 @@
+<module>
+    <User_List>
+        <User_List>
+            <Users t="dropdown" f="user"/>
+            <Team t="radio" f="persist" />
+            <Login t="button" l="Control/Control"/>
+        </User_List>
+    </User_List>
+    <Control>
+        <search>
+        </search>
+        <Map f="noscroll">
+            <Map t="map"/>
+        </Map>
+        <Control>
+            <cols>
+                <GPS_choice t="radio">
+                    Choose which GPS to connect to:
+                    <opts>
+                        <opt>Internal</opt>
+                        <opt>External</opt>
+                    </opts>
+                </GPS_choice>
+                <GPS_Refresh_Rate t="decimal"/>
+                <Tracklog_Distance_Interval_in_Meters t="decimal">
+                    Tracklog Distance Interval (m)
+                </Tracklog_Distance_Interval_in_Meters>
+                <Tracklog_Time_Inteval_in_Seconds t="decimal">
+                    Tracklog Time(Interval (s))
+                </Tracklog_Time_Inteval_in_Seconds>
+                <col>
+                    <Start_GPS t="button"/>
+                    <Stop_GPS t="button"/>
+                    <Set_Tracklog_Distance_Interval t="button"/>
+                    <Set_Tracklog_Time_Interval t="button"/>
+                </col>
+            </cols>
+
+            <Tracklog_Off t="button"/>
+            <Track_Log_Status f="readonly"/>
+            <Sync_On t="button"/>
+            <Sync_Off t="button"/>
+        </Control>
+    </Control>
+    <Survey_Unit>
+        <Survey_Unit>
+            <Survey_Unit_ID f="autonum"/>
+            <timestamp/>
+            <Total_Transect_Width t="decimal">
+                <desc>
+                
+                </desc>
+            </Total_Transect_Width>
+            <Number_of_Walkers t="decimal">
+                <desc>
+                </desc>
+            </Number_of_Walkers>
+            <Participants>
+                <desc></desc>
+            </Participants>
+            <Landform_Pattern>
+                <desc></desc>
+                <opts>
+                    <opt>a</opt>
+                </opts>
+            </Landform_Pattern>
+            <Landform_Element>
+                <desc></desc>
+                <opts>
+                    <opt></opt>
+                </opts>
+            </Landform_Element>
+            <Landform_Notes/>
+            <Vegetation_Structure_Upper>
+                Vegetation Structure-Upper 
+                <desc></desc>
+                <opts>
+                    <opt></opt>
+                </opts>
+            </Vegetation_Structure_Upper>
+            <Vegetation_Structure_Mid_stratum>
+                Vegetation Structure-Mid stratum
+                <desc></desc>
+                <opts>
+                    <opt></opt>
+                </opts>
+            </Vegetation_Structure_Mid_stratum>
+            <Vegetation_Structure_Ground_stratum>
+            Vegetation Structure-Ground stratum
+
+                <desc></desc>
+                <opts>
+                    <opt></opt>
+                </opts>
+            </Vegetation_Structure_Ground_stratum>
+            <Vegetation_Notes/>
+            <Ground_Surface_Visibility>
+                <desc></desc>
+                <opts>
+                    <opt></opt>
+                </opts>
+            </Ground_Surface_Visibility>
+            <Ground_Surface_Notes/>
+            <Photos t="camera"/>
+            <New_POI t="button">
+            Save and New Point of Interest
+            </New_POI>
+            <Finish_Survey_Unit t="button"/>
+            <Track_Log_Status f="readonly"/>
+        </Survey_Unit>
+        <hidden>
+            <Device_ID/>
+        </hidden>
+    </Survey_Unit>
+    <POI>
+        <POI>
+            <POI_ID/>
+            <container1>
+                <child1>
+                    <Latitude/>
+                </child1>
+                <child2>
+                    <Longitude/>
+                </child2>
+            </container1>
+            <container2>
+                <child1>
+                    <Northing/>
+                </child1>
+                <child2>
+                    <Easting/>
+                </child2>
+            </container2>
+            <takeGPS/>
+            <Feature_Type/>
+            <Notes/>
+            <Photos/>
+            <Attach_Photo/>
+            <container3>
+                <child1>
+                    <Timestamp/>
+                </child1>
+                <child2>
+                    <Recorded_By/>
+                </child2>
+            </container3>
+        </POI>
+    </POI>
+
+</module>
