@@ -44,107 +44,101 @@
     </Control>
     <Survey_Unit>
         <Survey_Unit>
-            <Survey_Unit_ID f="autonum"/>
-            <timestamp/>
-            <Total_Transect_Width t="decimal">
-                <desc>
-                
-                </desc>
-            </Total_Transect_Width>
-            <Number_of_Walkers t="decimal">
-                <desc>
-                </desc>
-            </Number_of_Walkers>
-            <Participants>
-                <desc></desc>
-            </Participants>
-            <Landform_Pattern>
-                <desc></desc>
-                <opts>
-                    <opt>a</opt>
-                </opts>
-            </Landform_Pattern>
-            <Landform_Element>
-                <desc></desc>
-                <opts>
-                    <opt></opt>
-                </opts>
-            </Landform_Element>
-            <Landform_Notes/>
-            <Vegetation_Structure_Upper>
-                Vegetation Structure-Upper 
-                <desc></desc>
-                <opts>
-                    <opt></opt>
-                </opts>
-            </Vegetation_Structure_Upper>
-            <Vegetation_Structure_Mid_stratum>
-                Vegetation Structure-Mid stratum
-                <desc></desc>
-                <opts>
-                    <opt></opt>
-                </opts>
-            </Vegetation_Structure_Mid_stratum>
-            <Vegetation_Structure_Ground_stratum>
+            <Survey_Unit_ID f="autonum">
+                <desc>The current autonumbering assumes single device in field. If multiple devices are in use, uniqueness rules must be defined.</desc>
+        </Survey_Unit_ID>/>
+        <timestamp/>
+        <Total_Transect_Width t="decimal">
+            <desc>>Description TBD</desc>
+        </Total_Transect_Width>
+        <Number_of_Walkers t="decimal">
+            <desc>Description TBD</desc>
+        </Number_of_Walkers>
+        <Participants>
+            <desc>Description TBD</desc>
+        </Participants>
+        <Landform_Pattern>
+            <description>A combination of relief, slope, stream channel occurance and mode of geomorphological activity within the of the survey unit. What landform pattern comprises the majority (>50%) of the survey unit? Minimum size of a landform pattern is circle 300 m in diameter circle with you at the centre. If a landform pattern that is greater in size is encountered, create a new survey unit.</description>
+            <!--@SOURCE: vocabs/landform-pattern.xml-->
+        </Landform_Pattern>
+        <Landform_Element>
+            <!--@SOURCE: vocabs/landform-elements.xml-->
+        </Landform_Element>
+        <Landform_Notes/>
+        <Vegetation_Structure_Upper>
+            Vegetation Structure-Upper 
+            <desc></desc>
+            <opts>
+                <opt></opt>
+            </opts>
+        </Vegetation_Structure_Upper>
+        <Vegetation_Structure_Mid_stratum>
+            Vegetation Structure-Mid stratum
+            <desc></desc>
+            <opts>
+                <opt></opt>
+            </opts>
+        </Vegetation_Structure_Mid_stratum>
+        <Vegetation_Structure_Ground_stratum>
             Vegetation Structure-Ground stratum
 
-                <desc></desc>
-                <opts>
-                    <opt></opt>
-                </opts>
-            </Vegetation_Structure_Ground_stratum>
-            <Vegetation_Notes/>
-            <Ground_Surface_Visibility>
-                <desc></desc>
-                <opts>
-                    <opt></opt>
-                </opts>
-            </Ground_Surface_Visibility>
-            <Ground_Surface_Notes/>
-            <Photos t="camera"/>
-            <New_POI t="button">
+            <desc></desc>
+            <opts>
+                <opt></opt>
+            </opts>
+        </Vegetation_Structure_Ground_stratum>
+        <Vegetation_Notes/>
+        <Ground_Surface_Visibility>
+            <desc></desc>
+            <opts>
+                <opt></opt>
+            </opts>
+        </Ground_Surface_Visibility>
+        <Ground_Surface_Notes/>
+        <Photos t="camera"/>
+        <New_POI t="button">
             Save and New Point of Interest
-            </New_POI>
-            <Finish_Survey_Unit t="button"/>
-            <Track_Log_Status f="readonly"/>
-        </Survey_Unit>
-        <hidden>
-            <Device_ID/>
-        </hidden>
+        </New_POI>
+        <Finish_Survey_Unit t="button"/>
+        <Track_Log_Status f="readonly"/>
     </Survey_Unit>
+    <hidden>
+        <Device_ID/>
+    </hidden>
+</Survey_Unit>
+<POI>
     <POI>
-        <POI>
-            <POI_ID/>
-            <container1>
-                <child1>
-                    <Latitude/>
-                </child1>
-                <child2>
-                    <Longitude/>
-                </child2>
-            </container1>
-            <container2>
-                <child1>
-                    <Northing/>
-                </child1>
-                <child2>
-                    <Easting/>
-                </child2>
-            </container2>
-            <takeGPS/>
-            <Feature_Type/>
-            <Notes/>
-            <Photos/>
-            <Attach_Photo/>
-            <container3>
-                <child1>
-                    <Timestamp/>
-                </child1>
-                <child2>
-                    <Recorded_By/>
-                </child2>
-            </container3>
-        </POI>
+        <POI_ID/>
+        <container1>
+            <child1>
+                <Latitude/>
+            </child1>
+            <child2>
+                <Longitude/>
+            </child2>
+        </container1>
+        <container2>
+            <child1>
+                <Northing/>
+            </child1>
+            <child2>
+                <Easting/>
+            </child2>
+        </container2>
+        <takeGPS/>
+        <Feature_Type/>
+        <Notes/>
+        <Photos/>
+        <Attach_Photo/>
+        <container3>
+            <child1>
+                <Timestamp/>
+            </child1>
+            <child2>
+                <Recorded_By/>
+            </child2>
+        </container3>
     </POI>
+</POI>
 
 </module>
