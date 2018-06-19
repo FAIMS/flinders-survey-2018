@@ -1,12 +1,14 @@
 <module>
-    <User_List>
+    <User_List f="nodata">
         <User_List>
             <Users t="dropdown" f="user"/>
-            <Team t="radio" f="persist" />
+            <Team t="radio" f="persist">
+                <!--@SOURCE: vocabs/team-code.xml-->
+            </Team>
             <Login t="button" l="Control/Control"/>
         </User_List>
     </User_List>
-    <Control>
+    <Control f="nodata">
         <search>
         </search>
         <Map f="noscroll">
@@ -14,20 +16,22 @@
         </Map>
         <Control>
             <cols>
-                <GPS_choice t="radio">
-                    Choose which GPS to connect to:
-                    <opts>
-                        <opt>Internal</opt>
-                        <opt>External</opt>
-                    </opts>
-                </GPS_choice>
-                <GPS_Refresh_Rate t="decimal"/>
-                <Tracklog_Distance_Interval_in_Meters t="decimal">
-                    Tracklog Distance Interval (m)
-                </Tracklog_Distance_Interval_in_Meters>
-                <Tracklog_Time_Inteval_in_Seconds t="decimal">
-                    Tracklog Time(Interval (s))
-                </Tracklog_Time_Inteval_in_Seconds>
+                <col>
+                    <GPS_choice t="radio">
+                        Choose which GPS to connect to:
+                        <opts>
+                            <opt>Internal</opt>
+                            <opt>External</opt>
+                        </opts>
+                    </GPS_choice>
+                    <GPS_Refresh_Rate b="decimal"/>
+                    <Tracklog_Distance_Interval_in_Meters b="decimal">
+                        Tracklog Distance Interval (m)
+                    </Tracklog_Distance_Interval_in_Meters>
+                    <Tracklog_Time_Inteval_in_Seconds b="decimal">
+                        Tracklog Time(Interval (s))
+                    </Tracklog_Time_Inteval_in_Seconds>
+                </col>
                 <col>
                     <Start_GPS t="button"/>
                     <Stop_GPS t="button"/>
@@ -35,57 +39,53 @@
                     <Set_Tracklog_Time_Interval t="button"/>
                 </col>
             </cols>
-
             <Tracklog_Off t="button"/>
             <Track_Log_Status f="readonly"/>
             <Sync_On t="button"/>
             <Sync_Off t="button"/>
+            <New_Survey_Unit t="button" l="Survey_Unit"/>
         </Control>
     </Control>
     <Survey_Unit>
+        <ftm>{Survey_Unit_ID} - {Team}</ftm>
         <Survey_Unit>
             <Survey_Unit_ID f="autonum">
                 <desc>The current autonumbering assumes single device in field. If multiple devices are in use, uniqueness rules must be defined.</desc>
         </Survey_Unit_ID>/>
         <timestamp/>
-        <Total_Transect_Width t="decimal">
+        <Total_Transect_Width b="decimal">
             <desc>>Description TBD</desc>
         </Total_Transect_Width>
-        <Number_of_Walkers t="decimal">
+        <Number_of_Walkers b="decimal">
             <desc>Description TBD</desc>
         </Number_of_Walkers>
         <Participants>
             <desc>Description TBD</desc>
         </Participants>
         <Landform_Pattern>
-            <description>A combination of relief, slope, stream channel occurance and mode of geomorphological activity within the of the survey unit. What landform pattern comprises the majority (>50%) of the survey unit? Minimum size of a landform pattern is circle 300 m in diameter circle with you at the centre. If a landform pattern that is greater in size is encountered, create a new survey unit.</description>
+            <desc>A combination of relief, slope, stream channel occurance and mode of geomorphological activity within the of the survey unit. What landform pattern comprises the majority (>50%) of the survey unit? Minimum size of a landform pattern is circle 300 m in diameter circle with you at the centre. If a landform pattern that is greater in size is encountered, create a new survey unit.</desc>
             <!--@SOURCE: vocabs/landform-pattern.xml-->
         </Landform_Pattern>
         <Landform_Element>
             <!--@SOURCE: vocabs/landform-elements.xml-->
         </Landform_Element>
-        <Landform_Notes/>
+        <Landform_Notes>
+            <desc>Optional. Provide any additional descriptive notes if required.</desc>
+        </Landform_Notes>
         <Vegetation_Structure_Upper>
             Vegetation Structure-Upper 
-            <desc></desc>
-            <opts>
-                <opt></opt>
-            </opts>
+            <desc>Categories based on the growth form, height and cover within the survey unit. Describe the vegetation structure for the dominant or tallest stratum, if present. What is the vegetation structure that comprises the majority (>50%) of the survey unit?</desc>
+            <!--@SOURCE: vocabs/survey-unit-vegetation-structure.xml -->
         </Vegetation_Structure_Upper>
         <Vegetation_Structure_Mid_stratum>
             Vegetation Structure-Mid stratum
-            <desc></desc>
-            <opts>
-                <opt></opt>
-            </opts>
+            <desc>Describe the vegetation structure for the mid-stratum, if present. What is the vegetation structure that comprises the majority (>50%) of the survey unit?</desc>
+            <!--@SOURCE: vocabs/survey-unit-vegetation-structure.xml -->
         </Vegetation_Structure_Mid_stratum>
         <Vegetation_Structure_Ground_stratum>
             Vegetation Structure-Ground stratum
-
-            <desc></desc>
-            <opts>
-                <opt></opt>
-            </opts>
+            <desc>Describe the vegetation structure for the ground-stratum, if present. What is the vegetation structure that comprises the majority (greater than 50%) of the survey unit? Usually less than 2.0 m in height.</desc>
+            <!--@SOURCE: vocabs/survey-unit-vegetation-structure.xml -->
         </Vegetation_Structure_Ground_stratum>
         <Vegetation_Notes/>
         <Ground_Surface_Visibility>
@@ -102,43 +102,11 @@
         <Finish_Survey_Unit t="button"/>
         <Track_Log_Status f="readonly"/>
     </Survey_Unit>
-    <hidden>
-        <Device_ID/>
-    </hidden>
+    <Vars f="hidden">
+        <Team i="User_List/User_List/Team">
+            <!--@SOURCE: vocabs/team-code.xml-->
+        </Team>
+    </Vars>
 </Survey_Unit>
-<POI>
-    <POI>
-        <POI_ID/>
-        <container1>
-            <child1>
-                <Latitude/>
-            </child1>
-            <child2>
-                <Longitude/>
-            </child2>
-        </container1>
-        <container2>
-            <child1>
-                <Northing/>
-            </child1>
-            <child2>
-                <Easting/>
-            </child2>
-        </container2>
-        <takeGPS/>
-        <Feature_Type/>
-        <Notes/>
-        <Photos/>
-        <Attach_Photo/>
-        <container3>
-            <child1>
-                <Timestamp/>
-            </child1>
-            <child2>
-                <Recorded_By/>
-            </child2>
-        </container3>
-    </POI>
-</POI>
 
 </module>
