@@ -8,6 +8,7 @@
             <Login t="button" l="Control/Control"/>
         </User_List>
     </User_List>
+
     <Control f="nodata">
         <search>
         </search>
@@ -45,74 +46,71 @@
             <Sync_Off t="button"/>
             <New_Survey_Unit t="button" l="Survey_Unit"/>
         </Control>
+        <Next_IDs f="hidden">
+            <autonum/>
+        </Next_IDs>
     </Control>
+
     <Survey_Unit>
-        <ftm>{Survey_Unit_ID} - {Team}</ftm>
+        <fmt>{Survey_Unit_ID} - {Team}</fmt>
         <Survey_Unit>
             <Survey_Unit_ID f="autonum">
                 <desc>The current autonumbering assumes single device in field. If multiple devices are in use, uniqueness rules must be defined.</desc>
-        </Survey_Unit_ID>/>
-        <timestamp/>
-        <Total_Transect_Width b="decimal">
-            <desc>>Description TBD</desc>
-        </Total_Transect_Width>
-        <Number_of_Walkers b="decimal">
-            <desc>Description TBD</desc>
-        </Number_of_Walkers>
-        <Participants>
-            <desc>Description TBD</desc>
-        </Participants>
-        <Landform_Pattern>
-            <desc>A combination of relief, slope, stream channel occurance and mode of geomorphological activity within the of the survey unit. What landform pattern comprises the majority (>50%) of the survey unit? Minimum size of a landform pattern is circle 300 m in diameter circle with you at the centre. If a landform pattern that is greater in size is encountered, create a new survey unit.</desc>
-            <!--@SOURCE: vocabs/landform-pattern.xml-->
-        </Landform_Pattern>
-        <Landform_Element>
-            <!--@SOURCE: vocabs/landform-elements.xml-->
-        </Landform_Element>
-        <Landform_Notes>
-            <desc>Optional. Provide any additional descriptive notes if required.</desc>
-        </Landform_Notes>
-        <Vegetation_Structure_Upper>
-            Vegetation Structure-Upper 
-            <desc>Categories based on the growth form, height and cover within the survey unit. Describe the vegetation structure for the dominant or tallest stratum, if present. What is the vegetation structure that comprises the majority (>50%) of the survey unit?</desc>
-            <!--@SOURCE: vocabs/survey-unit-vegetation-structure.xml -->
-        </Vegetation_Structure_Upper>
-        <Vegetation_Structure_Mid_stratum>
-            Vegetation Structure-Mid stratum
-            <desc>Describe the vegetation structure for the mid-stratum, if present. What is the vegetation structure that comprises the majority (>50%) of the survey unit?</desc>
-            <!--@SOURCE: vocabs/survey-unit-vegetation-structure.xml -->
-        </Vegetation_Structure_Mid_stratum>
-        <Vegetation_Structure_Ground_stratum>
-            Vegetation Structure-Ground stratum
-            <desc>Describe the vegetation structure for the ground-stratum, if present. What is the vegetation structure that comprises the majority (greater than 50%) of the survey unit? Usually less than 2.0 m in height.</desc>
-            <!--@SOURCE: vocabs/survey-unit-vegetation-structure.xml -->
-        </Vegetation_Structure_Ground_stratum>
-        <Vegetation_Notes>
-            <desc>Note any recognisable species that are particularly dominant, known classifications for the ecosystem or other pertinent information</desc>
-        </Vegetation_Notes>
-        <Ground_Surface_Visibility>
-            <desc></desc>
-            <opts>
-                <opt></opt>
-            </opts>
-        </Ground_Surface_Visibility>
-        <Ground_Surface_Notes>
-            <desc>Describe any factors or issues affecting ground cover</desc>
-        </Ground_Surface_Notes>
-        <Photos t="camera">
-            <desc>Take a photo that best represents the survey unit.</desc>
-        </Photos>
-        <New_POI t="button">
-            Save and New Point of Interest
-        </New_POI>
-        <Finish_Survey_Unit t="button"/>
-        <Track_Log_Status f="readonly"/>
+            </Survey_Unit_ID>
+            <timestamp/>
+            <Total_Transect_Width b="decimal">
+                <desc>>Description TBD</desc>
+            </Total_Transect_Width>
+            <Number_of_Walkers b="decimal">
+                <desc>Description TBD</desc>
+            </Number_of_Walkers>
+            <Participants>
+                <desc>Description TBD</desc>
+            </Participants>
+            <Landform_Pattern>
+                <desc>A combination of relief, slope, stream channel occurance and mode of geomorphological activity within the of the survey unit. What landform pattern comprises the majority (>50%) of the survey unit? Minimum size of a landform pattern is circle 300 m in diameter circle with you at the centre. If a landform pattern that is greater in size is encountered, create a new survey unit.</desc>
+                <!--@SOURCE: vocabs/landform-pattern.xml-->
+            </Landform_Pattern>
+            <Landform_Element>
+                <!--@SOURCE: vocabs/landform-elements.xml-->
+            </Landform_Element>
+            <Landform_Notes>
+                <desc>Optional. Provide any additional descriptive notes if required.</desc>
+            </Landform_Notes>
+            <Vegetation_Structure_Upper>
+                Vegetation Structure-Upper 
+                <desc>Categories based on the growth form, height and cover within the survey unit. Describe the vegetation structure for the dominant or tallest stratum, if present. What is the vegetation structure that comprises the majority (>50%) of the survey unit?</desc>
+                <!--@SOURCE: vocabs/survey-unit-vegetation-structure.xml -->
+            </Vegetation_Structure_Upper>
+            <Vegetation_Structure_Mid_stratum>
+                Vegetation Structure-Mid stratum
+                <desc>Describe the vegetation structure for the mid-stratum, if present. What is the vegetation structure that comprises the majority (>50%) of the survey unit?</desc>
+                <!--@SOURCE: vocabs/survey-unit-vegetation-structure.xml -->
+            </Vegetation_Structure_Mid_stratum>
+            <Vegetation_Structure_Ground_stratum>
+                Vegetation Structure-Ground stratum
+                <desc>Describe the vegetation structure for the ground-stratum, if present. What is the vegetation structure that comprises the majority (greater than 50%) of the survey unit? Usually less than 2.0 m in height.</desc>
+                <!--@SOURCE: vocabs/survey-unit-vegetation-structure.xml -->
+            </Vegetation_Structure_Ground_stratum>
+            <Vegetation_Notes/>
+            <Ground_Surface_Visibility>
+                <desc></desc>
+                <opts>
+                    <opt></opt>
+                </opts>
+            </Ground_Surface_Visibility>
+            <Ground_Surface_Notes/>
+            <Photos t="camera"/>
+            <New_POI t="button">
+                Save and New Point of Interest
+            </New_POI>
+            <Finish_Survey_Unit t="button"/>
+            <Track_Log_Status f="readonly"/>
+        </Survey_Unit>
+        <Vars f="hidden">
+            <Team i="User_List/User_List/Team">
+                <!--@SOURCE: vocabs/team-code.xml-->
+            </Team>
+        </Vars>
     </Survey_Unit>
-    <Vars f="hidden">
-        <Team i="User_List/User_List/Team">
-            <!--@SOURCE: vocabs/team-code.xml-->
-        </Team>
-    </Vars>
-</Survey_Unit>
-
 </module>
