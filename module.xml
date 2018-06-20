@@ -87,15 +87,21 @@
             <desc>Describe the vegetation structure for the ground-stratum, if present. What is the vegetation structure that comprises the majority (greater than 50%) of the survey unit? Usually less than 2.0 m in height.</desc>
             <!--@SOURCE: vocabs/survey-unit-vegetation-structure.xml -->
         </Vegetation_Structure_Ground_stratum>
-        <Vegetation_Notes/>
+        <Vegetation_Notes>
+            <desc>Note any recognisable species that are particularly dominant, known classifications for the ecosystem or other pertinent information</desc>
+        </Vegetation_Notes>
         <Ground_Surface_Visibility>
             <desc></desc>
             <opts>
                 <opt></opt>
             </opts>
         </Ground_Surface_Visibility>
-        <Ground_Surface_Notes/>
-        <Photos t="camera"/>
+        <Ground_Surface_Notes>
+            <desc>Describe any factors or issues affecting ground cover</desc>
+        </Ground_Surface_Notes>
+        <Photos t="camera">
+            <desc>Take a photo that best represents the survey unit.</desc>
+        </Photos>
         <New_POI t="button">
             Save and New Point of Interest
         </New_POI>
