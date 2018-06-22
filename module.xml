@@ -45,6 +45,7 @@
             <Sync_On t="button"/>
             <Sync_Off t="button"/>
             <New_Survey_Unit t="button" l="Survey_Unit"/>
+            <New_Point_of_Interest t="button" l="Point_of_Interest"/>
         </Control>
         <Next_IDs f="hidden">
             <autonum/>
@@ -52,7 +53,7 @@
     </Control>
 
     <Survey_Unit>
-        <fmt>{Survey_Unit_ID} - {Team}</fmt>
+        <fmt>{{Survey_Unit_ID}} - {{Team}}</fmt>
         <Survey_Unit>
             <Survey_Unit_ID f="autonum">
                 <desc>The current autonumbering assumes single device in field. If multiple devices are in use, uniqueness rules must be defined.</desc>
@@ -104,10 +105,31 @@
             <Finish_Survey_Unit t="button"/>
             <Track_Log_Status f="readonly"/>
         </Survey_Unit>
-        <Vars f="hidden">
-            <Team i="User_List/User_List/Team">
+        <Vars>
+            <Team t="radio" i="User_List/User_List/Team!">
                 <!--@SOURCE: vocabs/team-code.xml-->
             </Team>
         </Vars>
     </Survey_Unit>
+
+    <Point_of_Interest>
+        <fmt>{{Point_of_Interest_ID}}</fmt>
+        <Point_of_Interest>
+            <Point_of_Interest_ID f="autonum">
+                <desc>Description TBD</desc>
+            </Point_of_Interest_ID>
+            <Feature_Type>
+                <desc>Description TBD</desc>
+                <!-- @SOURCE: vocabs/feature-type.xml -->
+            </Feature_Type>
+            <Notes>
+                <desc>Description TBD</desc>
+            </Notes>
+            <Photos t="camera"/>
+            <cols>
+                <timestamp/>
+                <author/>
+            </cols>
+        </Point_of_Interest>
+    </Point_of_Interest>
 </module>
