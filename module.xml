@@ -94,10 +94,7 @@
             </Vegetation_Structure_Ground_stratum>
             <Vegetation_Notes/>
             <Ground_Surface_Visibility>
-                <desc></desc>
-                <opts>
-                    <opt></opt>
-                </opts>
+                <!-- @SOURCE: vocabs/ground-surface-visibility.xml -->
             </Ground_Surface_Visibility>
             <Ground_Surface_Notes/>
             <Photos t="camera"/>
