@@ -22,9 +22,9 @@
                 <Search_Limit b="decimal">
                     How many records_would you like to see?
                 </Search_Limit>
-                <Entity_Type t="dropdown" f="nolabel"/>
+                <Entity_Types t="dropdown" f="nolabel"/>
             </cols>
-            <Search_Result t="list" f="nolabel"/>
+            <Search_Results t="list" f="nolabel"/>
         </Search>
         <Map f="noscroll">
             <Map t="map"/>
@@ -150,4 +150,9 @@
             </Team>
         </Vars>
     </Point_of_Interest>
+
+    <logic><![CDATA[
+        <!--@SOURCE: logic/custom-search.bsh-->
+        ]]>
+    </logic>
 </module>
