@@ -1,0 +1,16 @@
+final String CONTROL_TAB = "Control/Control";
+
+void initAndPersistOverSessions(String ref, String defaultVal) {
+  setFieldValue(ref, defaultVal);
+  persistOverSessions(ref, defaultVal);
+}
+
+void setGpsInternalExternal() {
+  setFieldValue(CONTROL_TAB + "/GPS_choice", "{Internal}");
+}
+
+
+addOnEvent(CONTROL_TAB, "show", "setGpsInternalExternal()");
+initAndPersistOverSessions(CONTROL_TAB + "/GPS_Refresh_Rate",   "60");
+initAndPersistOverSessions(CONTROL_TAB + "/Tracklog_Distance_Interval_in_Meters", "100");
+initAndPersistOverSessions(CONTROL_TAB + "/Tracklog_Time_Inteval_in_Seconds", "30");
