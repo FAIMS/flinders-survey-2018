@@ -1,0 +1,24 @@
+final String[] USER_MENU_PATH_SPLIT = USER_MENU_PATH.split("/");
+final String USER_TABGROUP_REF = USER_MENU_PATH_SPLIT[0];
+final String USER_TAB_REF = USER_TABGROUP_REF + "/" + USER_MENU_PATH_SPLIT[1];
+final String LOGIN_BUTTON_REF = USER_TAB_REF + "/Login";
+boolean validateUserLogin() {
+    String refUser = USER_MENU_PATH;
+    String refTeam = USER_TAB_REF + "/Team";
+    String vocabIdUser = getFieldValue(refUser);
+    String vocabIdTeam = getFieldValue(refTeam);
+
+    boolean userSelected = !isNull(vocabIdUser);
+    boolean teamSelected = !isNull(vocabIdTeam);
+    
+    if (!userSelected) {
+        showWarning("No user selected.", "To log in, please select a user.");
+    } 
+    if (!teamSelected) {
+        showWarning("No team selected", "To log in, please select a team");
+    }
+
+    return userSelected && teamSelected;
+}
+
+addOnEventCond(LOGIN_BUTTON_REF, "click", "validateUserLogin()");

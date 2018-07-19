@@ -1,47 +1,50 @@
 /******************************************************************************/
 /*                               CUSTOM SEARCH                                */
 /******************************************************************************/
-final String searchTabRef = "Control/Search";
-final String entityTypesRef = searchTabRef + "/Entity_Types";
-final String searchLimitRef = searchTabRef + "/Search_Limit";
+final String SEARCH_TAB_REF = "Control/Search";
+final String ENTITY_TYPES_REF = SEARCH_TAB_REF + "/Entity_Types";
+final String SEARCH_LIMIT_REF = SEARCH_TAB_REF + "/Search_Limit";
 
-addOnEvent(searchTabRef, "show", "search()");
-addOnEvent(entityTypesRef, "click", "search()");
+addOnEvent(SEARCH_TAB_REF, "show", "search()");
+addOnEvent(ENTITY_TYPES_REF, "click", "search()");
 
 entityTypes = new ArrayList();
 entityTypes.add(new NameValuePair("{Survey_Unit}", "Survey Unit"));
 entityTypes.add(new NameValuePair("{Point_of_Interest}", "Point of Interest"));
 
-populateDropDown(entityTypesRef, entityTypes);
+populateDropDown(ENTITY_TYPES_REF, entityTypes);
 
 void search() {
-  String refEntityList  = "Control/Search/Search_Results";
-  String refEntityTypes = entityTypesRef;
+    String refEntityList  = SEARCH_TAB_REF + "/Search_Results";
+    String refEntityTypes = ENTITY_TYPES_REF;
+    String refSearchLimit = SEARCH_LIMIT_REF;    
 
-  String type = getFieldValue(refEntityTypes);
-  populateSearchLimit();
-  int searchLimit = Integer.parseInt(getFieldValue(searchLimitRef));
-  String searchQuery = "SELECT uuid, response "+
-                       "  FROM latestNonDeletedArchEntFormattedIdentifiers  "+
-                       " WHERE uuid in (SELECT uuid "+
-                       "                  FROM latestNonDeletedArchEntIdentifiers "+
-                       "                 WHERE ( aenttypename = {type} ) "+
-                       "                )  "+
-                       " ORDER BY response "+
-                       " LIMIT ? "+
-                       "OFFSET ? ";
-  searchQuery = dbReplaceFirst(searchQuery, "{type}", type);
-  searchQuery = dbReplaceFirst(searchQuery, "{type}", type);
+    String type = getFieldValue(refEntityTypes);
 
-  populateCursorList(refEntityList, searchQuery, searchLimit);
-  refreshTabgroupCSS("Control");
+    populateSearchLimit();
 
-  Log.d("Module", "Search query: " + searchQuery);
+    int searchLimit = Integer.parseInt(getFieldValue(refSearchLimit));
+    String searchQuery = "SELECT uuid, response "+
+                         "  FROM latestNonDeletedArchEntFormattedIdentifiers  "+
+                         " WHERE uuid in (SELECT uuid "+
+                         "                  FROM latestNonDeletedArchEntIdentifiers "+
+                         "                 WHERE ( aenttypename = {type} ) "+
+                         "                )  "+
+                         " ORDER BY response "+
+                         " LIMIT ? "+
+                         "OFFSET ? ";
+    searchQuery = dbReplaceFirst(searchQuery, "{type}", type);
+    searchQuery = dbReplaceFirst(searchQuery, "{type}", type);
+
+    populateCursorList(refEntityList, searchQuery, searchLimit);
+    refreshTabgroupCSS("Control");
+
+    Log.d("Module", "Search query: " + searchQuery);
 }
 
 void populateSearchLimit() {
-    if(isNull(getFieldValue(searchLimitRef))) {
-        setFieldValue(searchLimitRef, "5");
+    if(isNull(getFieldValue(SEARCH_LIMIT_REF))) {
+        setFieldValue(SEARCH_LIMIT_REF, "5");
     }
 }
 
