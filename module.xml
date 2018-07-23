@@ -30,29 +30,37 @@
             <Map t="map"/>
         </Map>
         <Control>
+            <GPS_choice t="radio">
+                Choose which GPS to connect to:
+                <opts>
+                    <opt>Internal</opt>
+                    <opt>External</opt>
+                </opts>
+            </GPS_choice>
             <cols>
                 <col>
-                    <GPS_choice t="radio">
-                        Choose which GPS to connect to:
-                        <opts>
-                            <opt>Internal</opt>
-                            <opt>External</opt>
-                        </opts>
-                    </GPS_choice>
                     <GPS_Refresh_Rate b="decimal"/>
-                    <Tracklog_Distance_Interval_in_Meters b="decimal">
-                        Tracklog Distance Interval (m)
-                    </Tracklog_Distance_Interval_in_Meters>
-                    <Tracklog_Time_Inteval_in_Seconds b="decimal">
-                        Tracklog Time(Interval (s))
-                    </Tracklog_Time_Inteval_in_Seconds>
                 </col>
                 <col>
                     <Start_GPS t="button"/>
                     <Stop_GPS t="button"/>
-                    <Set_Tracklog_Distance_Interval t="button"/>
-                    <Set_Tracklog_Time_Interval t="button"/>
                 </col>
+            </cols>
+            <cols>
+                <Tracklog_Distance_Interval_in_Meters b="decimal">
+                    Tracklog Distance Interval (m)
+                </Tracklog_Distance_Interval_in_Meters>
+                <Tracklog_Distance_Button t="button">
+                    Enable Tracklog and Set Distance Interval
+                </Tracklog_Distance_Button>
+            </cols>
+            <cols>
+                <Tracklog_Time_Interval_in_Seconds b="decimal">
+                    Tracklog Time(Interval (s))
+                </Tracklog_Time_Interval_in_Seconds>
+                <Tracklog_Time_Button t="button">
+                Enable Tracklog and Set Time Interval
+                </Tracklog_Time_Button>
             </cols>
             <Tracklog_Off t="button"/>
             <Track_Log_Status f="readonly"/>
@@ -153,6 +161,8 @@
 
     <logic><![CDATA[
         <!--@SOURCE: logic/custom-search.bsh-->
+        <!--@SOURCE: logic/user-tab-validation.bsh-->
+        <!--@SOURCE: logic/tracklog.bsh-->
         ]]>
     </logic>
 </module>

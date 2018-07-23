@@ -1,8 +1,17 @@
 final String CONTROL_TAB = "Control/Control";
 
+final String GPS_REFRESH_RATE_REF = CONTROL_TAB + "/GPS_Refresh_Rate";
+final String TRACKLOG_DISTANCE_INTERVAL_REF = CONTROL_TAB + "/Tracklog_Distance_Interval_in_Meters";
+final String TRACKLOG_TIME_INTERVAL_REF = CONTROL_TAB + "/Tracklog_Time_Interval_in_Seconds";
+
+
 void initAndPersistOverSessions(String ref, String defaultVal) {
   setFieldValue(ref, defaultVal);
   persistOverSessions(ref, defaultVal);
+}
+
+boolean isGPSOn() {
+  return isInternalGPSOn() || isExternalGPSOn();
 }
 
 void setGpsInternalExternal() {
@@ -10,7 +19,9 @@ void setGpsInternalExternal() {
 }
 
 
+
+
 addOnEvent(CONTROL_TAB, "show", "setGpsInternalExternal()");
-initAndPersistOverSessions(CONTROL_TAB + "/GPS_Refresh_Rate",   "60");
-initAndPersistOverSessions(CONTROL_TAB + "/Tracklog_Distance_Interval_in_Meters", "100");
-initAndPersistOverSessions(CONTROL_TAB + "/Tracklog_Time_Inteval_in_Seconds", "30");
+initAndPersistOverSessions(GPS_REFRESH_RATE_REF,   "60");
+initAndPersistOverSessions(TRACKLOG_DISTANCE_INTERVAL_REF, "100");
+initAndPersistOverSessions(TRACKLOG_TIME_INTERVAL_REF, "30");
