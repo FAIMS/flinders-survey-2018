@@ -4,7 +4,17 @@ final String GPS_REFRESH_RATE_REF = CONTROL_TAB + "/GPS_Refresh_Rate";
 final String TRACKLOG_DISTANCE_INTERVAL_REF = CONTROL_TAB + "/Tracklog_Distance_Interval_in_Meters";
 final String TRACKLOG_TIME_INTERVAL_REF = CONTROL_TAB + "/Tracklog_Time_Interval_in_Seconds";
 
+final String GPS_CHOICE_REF = CONTROL_TAB + "/GPS_choice";
+final String TRACKLOG_STATUS_REF = CONTROL_TAB + "/Tracklog_Status";
 
+final String START_GPS_BUTTON_REF = CONTROL_TAB + "/Start_GPS";
+final String STOP_GPS_BUTTON_REF = CONTROL_TAB + "/Stop_GPS";
+
+final String ENABLE_TRACKLOG_DISTANCE_BUTTON_REF= CONTROL_TAB + "/Tracklog_Distance_Button";
+final String ENABLE_TRACKLOG_TIME_BUTTON_REF = CONTROL_TAB + "/Tracklog_Time_Button";
+final String TURN_OFF_TRACKLOG_BUTTON_REF = CONTROL_TAB + "Tracklog_Off";
+
+String tracklogStatus = "Tracklog is stopped";
 void initAndPersistOverSessions(String ref, String defaultVal) {
   setFieldValue(ref, defaultVal);
   persistOverSessions(ref, defaultVal);
@@ -15,13 +25,62 @@ boolean isGPSOn() {
 }
 
 void setGpsInternalExternal() {
-  setFieldValue(CONTROL_TAB + "/GPS_choice", "{Internal}");
+  setFieldValue(GPS_CHOICE_REF, "{Internal}");
+}
+boolean startGPS() {
+    Object intext = getFieldValue(GPS_CHOICE_REF);
+    if(isNull(intext)) {
+        showWarning("Warning", "Please choose whether you would like to connect to internal or external GPS.");
+        return false;
+    }
+    setGPSUpdateInterval(Integer.parseInt(getFieldValue(GPS_REFRESH_RATE_REF)));
+    showToast("GPS enabled. GPS refresh rate set to " + getFieldValue(GPS_REFRESH_RATE_REF) + ".");
+    if(intext.equals("Internal")) { 
+        if(isExternalGPSOn()) stopGPS();
+        startInternalGPS();
+    }
+    if(intext.equals("External")) {
+        if(isInternalGPSOn()) stopGPS();
+        startExternalGPS();
+    }
+    updateTracklogStatus();
+    return true;
 }
 
+void stopGPSLogic() {
+    if(isInternalGPSOn() || isExternalGPSOn()) {
+        showToast("GPS disabled.");
+        stopGPS();    
+    } else {
+        showToast("GPS is not turned on.");
+    }
+}
 
+void updateTracklogStatus() {
 
+}
+
+void startDistanceTracklog() {
+
+}
+
+void startTimeTracklog() {
+
+}
+
+void stopTracklog() {
+    stopTrackingGPS();
+    numTracklogPoints = 0;
+    numTransectPoints = 0;
+    tracklogState = "Stopped";
+    showToast("Tracklog disabled.");
+    updateTracklogStatus();
+}
+
+setGpsInternalExternal();
 
 addOnEvent(CONTROL_TAB, "show", "setGpsInternalExternal()");
 initAndPersistOverSessions(GPS_REFRESH_RATE_REF,   "60");
 initAndPersistOverSessions(TRACKLOG_DISTANCE_INTERVAL_REF, "100");
 initAndPersistOverSessions(TRACKLOG_TIME_INTERVAL_REF, "30");
+

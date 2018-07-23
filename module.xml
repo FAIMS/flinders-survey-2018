@@ -59,11 +59,11 @@
                     Tracklog Time(Interval (s))
                 </Tracklog_Time_Interval_in_Seconds>
                 <Tracklog_Time_Button t="button">
-                Enable Tracklog and Set Time Interval
+                    Enable Tracklog and Set Time Interval
                 </Tracklog_Time_Button>
             </cols>
             <Tracklog_Off t="button"/>
-            <Track_Log_Status f="readonly"/>
+            <Tracklog_Status f="readonly"/>
             <Sync_On t="button"/>
             <Sync_Off t="button"/>
         </Control>
@@ -163,6 +163,7 @@
         <!--@SOURCE: logic/custom-search.bsh-->
         <!--@SOURCE: logic/user-tab-validation.bsh-->
         <!--@SOURCE: logic/tracklog.bsh-->
+		<!--@SOURCE: logic/sync-disable.bsh-->
         ]]>
     </logic>
 </module>
