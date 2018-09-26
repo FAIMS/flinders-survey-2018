@@ -1,0 +1,5 @@
+/*********************************** HEADER ***********************************/
+final String CONTROL_TAB_GROUP_REF = "Control";
+final String CONTROL_TAB_REF = "Control";
+
+final String CONTROL_TAB_REF_FULL = CONTROL_TAB_GROUP_REF + "/" + CONTROL_TAB_REF;

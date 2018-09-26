@@ -1,0 +1,22 @@
+/******************************** SYNC DISABLE ********************************/
+final String SYNC_ON_BUTTON_REF = CONTROL_TAB_REF_FULL + "/Sync_On";
+final String SYNC_OFF_BUTTON_REF = CONTROL_TAB_REF_FULL + "/Sync_Off";
+
+// Bind "click" event for sync on and sync off button.
+addOnEvent(SYNC_ON_BUTTON_REF, "click", "startSync()");
+addOnEvent(SYNC_OFF_BUTTON_REF, "click", "stopSync()");
+
+startSync() {
+    setSyncEnabled(true);
+    setFileSyncEnabled(true);
+    showToast("Sync enabled.");
+}
+
+stopSync() {
+    setSyncEnabled(false);
+    setFileSyncEnabled(false);
+    showToast("Sync disabled.");
+}
+
+// Disable sync by default.
+stopSync();

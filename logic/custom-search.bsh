@@ -1,11 +1,12 @@
 /******************************************************************************/
 /*                               CUSTOM SEARCH                                */
 /******************************************************************************/
-final String SEARCH_TAB_REF = "Control/Search";
-final String ENTITY_TYPES_REF = SEARCH_TAB_REF + "/Entity_Types";
-final String SEARCH_LIMIT_REF = SEARCH_TAB_REF + "/Search_Limit";
+final String SEARCH_TAB_REF = "Search";
+final String SEARCH_TAB_REF_FULL = CONTROL_TAB_GROUP_REF + "/" + SEARCH_TAB_REF;
+final String ENTITY_TYPES_REF = SEARCH_TAB_REF_FULL + "/Entity_Types";
+final String SEARCH_LIMIT_REF = SEARCH_TAB_REF_FULL + "/Search_Limit";
 
-addOnEvent(SEARCH_TAB_REF, "show", "search()");
+addOnEvent(SEARCH_TAB_REF_FULL, "show", "search()");
 addOnEvent(ENTITY_TYPES_REF, "click", "search()");
 
 entityTypes = new ArrayList();
@@ -15,9 +16,9 @@ entityTypes.add(new NameValuePair("{Point_of_Interest}", "Point of Interest"));
 populateDropDown(ENTITY_TYPES_REF, entityTypes);
 
 void search() {
-    String refEntityList  = SEARCH_TAB_REF + "/Search_Results";
+    String refEntityList  = SEARCH_TAB_REF_FULL + "/Search_Results";
     String refEntityTypes = ENTITY_TYPES_REF;
-    String refSearchLimit = SEARCH_LIMIT_REF;    
+    String refSearchLimit = SEARCH_LIMIT_REF;
 
     String type = getFieldValue(refEntityTypes);
 
@@ -47,4 +48,3 @@ void populateSearchLimit() {
         setFieldValue(SEARCH_LIMIT_REF, "5");
     }
 }
-

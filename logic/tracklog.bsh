@@ -1,18 +1,25 @@
-final String CONTROL_TAB = "Control/Control";
+// GPS refresh rate field ref
+final String GPS_REFRESH_RATE_REF = CONTROL_TAB_REF_FULL + "/GPS_Refresh_Rate";
+// Tracklog Interval Ref
+final String TRACKLOG_DISTANCE_INTERVAL_REF = CONTROL_TAB_REF_FULL + "/Tracklog_Distance_Interval_in_Meters";
+final String TRACKLOG_TIME_INTERVAL_REF = CONTROL_TAB_REF_FULL + "/Tracklog_Time_Interval_in_Seconds";
 
-final String GPS_REFRESH_RATE_REF = CONTROL_TAB + "/GPS_Refresh_Rate";
-final String TRACKLOG_DISTANCE_INTERVAL_REF = CONTROL_TAB + "/Tracklog_Distance_Interval_in_Meters";
-final String TRACKLOG_TIME_INTERVAL_REF = CONTROL_TAB + "/Tracklog_Time_Interval_in_Seconds";
+// GPS choice radio button ref
+final String GPS_CHOICE_REF = CONTROL_TAB_REF_FULL + "/GPS_choice";
 
-final String GPS_CHOICE_REF = CONTROL_TAB + "/GPS_choice";
-final String TRACKLOG_STATUS_REF = CONTROL_TAB + "/Tracklog_Status";
+// Tracklog status field ref
+final String TRACKLOG_STATUS_REF = CONTROL_TAB_REF_FULL + "/Tracklog_Status";
 
-final String START_GPS_BUTTON_REF = CONTROL_TAB + "/Start_GPS";
-final String STOP_GPS_BUTTON_REF = CONTROL_TAB + "/Stop_GPS";
+// Start GPS button ref
+final String START_GPS_BUTTON_REF = CONTROL_TAB_REF_FULL + "/Start_GPS";
+// Stop GPS button ref
+final String STOP_GPS_BUTTON_REF = CONTROL_TAB_REF_FULL + "/Stop_GPS";
 
-final String ENABLE_TRACKLOG_DISTANCE_BUTTON_REF= CONTROL_TAB + "/Tracklog_Distance_Button";
-final String ENABLE_TRACKLOG_TIME_BUTTON_REF = CONTROL_TAB + "/Tracklog_Time_Button";
-final String TURN_OFF_TRACKLOG_BUTTON_REF = CONTROL_TAB + "Tracklog_Off";
+// Enable Tracklog button ref
+final String ENABLE_TRACKLOG_DISTANCE_BUTTON_REF= CONTROL_TAB_REF_FULL + "/Tracklog_Distance_Button";
+final String ENABLE_TRACKLOG_TIME_BUTTON_REF = CONTROL_TAB_REF_FULL + "/Tracklog_Time_Button";
+// Turn off Tracklog button ref
+final String TURN_OFF_TRACKLOG_BUTTON_REF = CONTROL_TAB_REF_FULL + "/Tracklog_Off";
 
 String tracklogStatus = "Tracklog is stopped";
 void initAndPersistOverSessions(String ref, String defaultVal) {
@@ -27,6 +34,7 @@ boolean isGPSOn() {
 void setGpsInternalExternal() {
   setFieldValue(GPS_CHOICE_REF, "{Internal}");
 }
+
 boolean startGPS() {
     Object intext = getFieldValue(GPS_CHOICE_REF);
     if(isNull(intext)) {
@@ -35,7 +43,7 @@ boolean startGPS() {
     }
     setGPSUpdateInterval(Integer.parseInt(getFieldValue(GPS_REFRESH_RATE_REF)));
     showToast("GPS enabled. GPS refresh rate set to " + getFieldValue(GPS_REFRESH_RATE_REF) + ".");
-    if(intext.equals("Internal")) { 
+    if(intext.equals("Internal")) {
         if(isExternalGPSOn()) stopGPS();
         startInternalGPS();
     }
@@ -50,7 +58,7 @@ boolean startGPS() {
 void stopGPSLogic() {
     if(isInternalGPSOn() || isExternalGPSOn()) {
         showToast("GPS disabled.");
-        stopGPS();    
+        stopGPS();
     } else {
         showToast("GPS is not turned on.");
     }
@@ -77,10 +85,22 @@ void stopTracklog() {
     updateTracklogStatus();
 }
 
+void initAndPersistTracklogIntervals() {
+  initAndPersistOverSessions(TRACKLOG_DISTANCE_INTERVAL_REF, "100");
+  initAndPersistOverSessions(TRACKLOG_TIME_INTERVAL_REF, "30");
+}
+
+void initAndPersistGPSRefreshRate() {
+  initAndPersistOverSessions(GPS_REFRESH_RATE_REF,   "60");
+}
+
 setGpsInternalExternal();
 
-addOnEvent(CONTROL_TAB, "show", "setGpsInternalExternal()");
-initAndPersistOverSessions(GPS_REFRESH_RATE_REF,   "60");
-initAndPersistOverSessions(TRACKLOG_DISTANCE_INTERVAL_REF, "100");
-initAndPersistOverSessions(TRACKLOG_TIME_INTERVAL_REF, "30");
+addOnEvent(CONTROL_TAB_REF_FULL, "show", "setGpsInternalExternal()");
 
+addOnEvent(START_GPS_BUTTON_REF, "click", "startGPS();");
+addOnEvent(STOP_GPS_BUTTON_REF, "click", "stopGPSLogic();");
+
+
+initAndPersistGPSRefreshRate();
+initAndPersistTracklogIntervals();
