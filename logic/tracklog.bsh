@@ -69,11 +69,35 @@ void updateTracklogStatus() {
 }
 
 void startDistanceTracklog() {
+    stopTracklog();
 
+    String trackText = getFieldValue(TRACKLOG_TIME_INTERVAL_REF);
+    int    trackInt  = Integer.parseInt(trackText);
+
+    if(isInternalGPSOn() || isExternalGPSOn()) {
+        showToast("Tracklog enabled. Tracklog distance interval set to " + trackText + " metres.");
+        startTrackingGPS("distance", trackInt, "saveGPSTrack()");
+        updateGPSDiagnostics();
+    } else {
+        showToast("GPS is not turned on.");
+    }
 }
 
 void startTimeTracklog() {
+  stopTracklog();
 
+  String trackText = getFieldValue(TRACKLOG_TIME_INTERVAL_REF);
+  int    trackInt  = Integer.parseInt(trackText);
+
+  if (trackInt <= 0) {
+      showToast("Please enter a positive number in the 'Tracking Distance Interval' field");
+    } else if(isInternalGPSOn() || isExternalGPSOn()) {
+        showToast("Tracklog enabled. Tracklog time interval set to " + trackText + " seconds.");
+        startTrackingGPS("time", trackInt, "saveGPSTrack()");
+        updateGPSDiagnostics();
+    } else {
+        showToast("GPS is not turned on.");
+    }
 }
 
 void stopTracklog() {
@@ -85,6 +109,90 @@ void stopTracklog() {
     updateTracklogStatus();
 }
 
+boolean transectEnabled = false;
+
+void saveGPSTrack() {
+  if (isInUnitTestTime()) {
+      // This function uses the Nutiteq `Point` class, which is difficult to
+      // mock.
+      return;
+    }
+  String teamFieldValue = getFieldValue(TEAM_REF);
+  String teamQuery = "SELECT vocabname FROM vocabulary WHERE vocabid = {team}";
+  teamQuery = dbReplaceFirst(teamQuery, "{team}", teamFieldValue);
+    fetchOne("SELECT vocabname FROM vocabulary WHERE vocabid = " + teamFieldValue, new FetchCallback() {
+        onFetch(teamQueryResult) {
+            System.out.println("Result: " + teamQueryResult.get(0));
+            /*
+            position = getGPSPosition();
+            if (position == null) {
+                tracklogState = "Bad GPS Fix";
+                return;
+            }
+            positionProj = getGPSPositionProjected();
+            numTracklogPoints++;
+
+            List attributes = createAttributeList();
+
+            String date = new java.text.SimpleDateFormat("d-MMM-yy HH:MM:ss z").format(new Date());
+
+            attributes.add(createEntityAttribute("Longitude", null, null, "" + position.getLongitude(), null));
+            attributes.add(createEntityAttribute("Latitude", null, null, "" + position.getLatitude(), null ));
+            attributes.add(createEntityAttribute("Easting", null, null, "" + positionProj.getLongitude(), null));
+            attributes.add(createEntityAttribute("Northing", null, null, "" + positionProj.getLatitude(), null ));
+            attributes.add(createEntityAttribute("Heading", null, null, "" + getGPSHeading(), null));
+            attributes.add(createEntityAttribute("Accuracy", null, null, "" + getGPSEstimatedAccuracy(), null));
+            attributes.add(createEntityAttribute("Timestamp", null, null, "" + date, null));
+            attributes.add(createEntityAttribute("TracklogTeam", teamQuery.get(0), null, null, null));
+
+            Point p = new Point(new MapPos(positionProj.getLongitude(), positionProj.getLatitude()), null, null, null);
+            ArrayList l = new ArrayList();
+            l.add(p);
+
+            String surveyUnitIdRef = SURVEY_UNIT_TAB_REF_FULL + "/Survey_Unit_ID";
+            String surveyUnitTotalTransectWidthRef = SURVEY_UNIT_TAB_REF_FULL + "/Total_Transect_Width";
+            saveArchEnt(null, "Tracklog", l, attributes, new SaveCallback() {
+                onSave(uuid, newRecord) {
+                  /*
+
+                    if (transectEnabled) {
+                        numTransectPoints++;
+                        attributes.add(createEntityAttribute("SUID", getFieldValue(surveyUnitIdRef), null, null, null));
+                        attributes.add(createEntityAttribute("Width", getFieldValue(surveyUnitTotalTransectWidthRef), null, null, null));
+                        if (!stateAppend.equals("")) {
+                            attributes.add(createEntityAttribute("State", stateAppend, null, null, null));
+                            if(stateAppend.equals("End")) {
+                                transectEnabled=false;
+                            }
+                            stateAppend = "";
+                        }
+
+                        saveArchEnt(null, "Transect", l, attributes, new SaveCallback() {
+                            onSave(uuid, newRecord) {
+                                transect_id = uuid;
+                                if(transectEnabled) {
+                                    saveEntitiesToRel("TransectSUI", transect_id, survey_unit_id);
+                                } else {
+                                    saveEntitiesToRel("TransectSUI", transect_id, survey_unit_id, new Callable() {
+                                        call() {
+                                            drawSurveyUnit();
+                                        }
+                                    });
+                                }
+                                updateTrackStatus();
+                            }
+                        });
+                    }
+
+                }
+
+            });
+            */
+        }
+    });
+}
+
+
 void initAndPersistTracklogIntervals() {
   initAndPersistOverSessions(TRACKLOG_DISTANCE_INTERVAL_REF, "100");
   initAndPersistOverSessions(TRACKLOG_TIME_INTERVAL_REF, "30");
@@ -94,6 +202,7 @@ void initAndPersistGPSRefreshRate() {
   initAndPersistOverSessions(GPS_REFRESH_RATE_REF,   "60");
 }
 
+
 setGpsInternalExternal();
 
 addOnEvent(CONTROL_TAB_REF_FULL, "show", "setGpsInternalExternal()");
@@ -101,6 +210,9 @@ addOnEvent(CONTROL_TAB_REF_FULL, "show", "setGpsInternalExternal()");
 addOnEvent(START_GPS_BUTTON_REF, "click", "startGPS();");
 addOnEvent(STOP_GPS_BUTTON_REF, "click", "stopGPSLogic();");
 
+addOnEvent(ENABLE_TRACKLOG_DISTANCE_BUTTON_REF, "click", "startDistanceTracklog()");
+addOnEvent(ENABLE_TRACKLOG_TIME_BUTTON_REF, "click", "startTimeTracklog()");
+addOnEvent(TURN_OFF_TRACKLOG_BUTTON_REF, "click", "stopTracklog()");
 
 initAndPersistGPSRefreshRate();
 initAndPersistTracklogIntervals();
