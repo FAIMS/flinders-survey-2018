@@ -166,6 +166,8 @@
         <TracklogTeam/>
         <Latitude/>
         <Longitude/>
+        <Easting/>
+        <Northing/>
         <Heading/>
         <Accuracy/>
       </Tracklog>

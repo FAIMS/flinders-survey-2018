@@ -21,6 +21,9 @@ final String ENABLE_TRACKLOG_TIME_BUTTON_REF = CONTROL_TAB_REF_FULL + "/Tracklog
 // Turn off Tracklog button ref
 final String TURN_OFF_TRACKLOG_BUTTON_REF = CONTROL_TAB_REF_FULL + "/Tracklog_Off";
 
+int curNumTracklogPoints = 0;
+
+
 String tracklogStatus = "Tracklog is stopped";
 void initAndPersistOverSessions(String ref, String defaultVal) {
   setFieldValue(ref, defaultVal);
@@ -102,7 +105,7 @@ void startTimeTracklog() {
 
 void stopTracklog() {
     stopTrackingGPS();
-    numTracklogPoints = 0;
+    curNumTracklogPoints = 0;
     numTransectPoints = 0;
     tracklogState = "Stopped";
     showToast("Tracklog disabled.");
@@ -122,19 +125,19 @@ void saveGPSTrack() {
   teamQuery = dbReplaceFirst(teamQuery, "{team}", teamFieldValue);
     fetchOne("SELECT vocabname FROM vocabulary WHERE vocabid = " + teamFieldValue, new FetchCallback() {
         onFetch(teamQueryResult) {
-            System.out.println("Result: " + teamQueryResult.get(0));
-            /*
             position = getGPSPosition();
             if (position == null) {
                 tracklogState = "Bad GPS Fix";
                 return;
             }
             positionProj = getGPSPositionProjected();
-            numTracklogPoints++;
+
+            curNumTracklogPoints++;
 
             List attributes = createAttributeList();
 
             String date = new java.text.SimpleDateFormat("d-MMM-yy HH:MM:ss z").format(new Date());
+            String curTracklogTeam = teamQueryResult.get(0);
 
             attributes.add(createEntityAttribute("Longitude", null, null, "" + position.getLongitude(), null));
             attributes.add(createEntityAttribute("Latitude", null, null, "" + position.getLatitude(), null ));
@@ -143,7 +146,7 @@ void saveGPSTrack() {
             attributes.add(createEntityAttribute("Heading", null, null, "" + getGPSHeading(), null));
             attributes.add(createEntityAttribute("Accuracy", null, null, "" + getGPSEstimatedAccuracy(), null));
             attributes.add(createEntityAttribute("Timestamp", null, null, "" + date, null));
-            attributes.add(createEntityAttribute("TracklogTeam", teamQuery.get(0), null, null, null));
+            attributes.add(createEntityAttribute("TracklogTeam", null, null, curTracklogTeam, null));
 
             Point p = new Point(new MapPos(positionProj.getLongitude(), positionProj.getLatitude()), null, null, null);
             ArrayList l = new ArrayList();
@@ -183,11 +186,11 @@ void saveGPSTrack() {
                             }
                         });
                     }
-
+                    */
                 }
 
             });
-            */
+
         }
     });
 }
