@@ -56,7 +56,7 @@
             </cols>
             <cols>
                 <Tracklog_Time_Interval_in_Seconds b="decimal">
-                    Tracklog Time(Interval (s))
+                    Tracklog Time Interval (s)
                 </Tracklog_Time_Interval_in_Seconds>
                 <Tracklog_Time_Button t="button">
                     Enable Tracklog and Set Time Interval

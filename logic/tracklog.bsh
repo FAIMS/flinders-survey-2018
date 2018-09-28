@@ -74,10 +74,12 @@ void updateTracklogStatus() {
 void startDistanceTracklog() {
     stopTracklog();
 
-    String trackText = getFieldValue(TRACKLOG_TIME_INTERVAL_REF);
+    String trackText = getFieldValue(TRACKLOG_DISTANCE_INTERVAL_REF);
     int    trackInt  = Integer.parseInt(trackText);
 
-    if(isInternalGPSOn() || isExternalGPSOn()) {
+    if (trackInt <= 0) {
+     showToast("Please enter a positive number in the 'Tracklog Distance Interval (m)' field");
+    } else if(isInternalGPSOn() || isExternalGPSOn()) {
         showToast("Tracklog enabled. Tracklog distance interval set to " + trackText + " metres.");
         startTrackingGPS("distance", trackInt, "saveGPSTrack()");
         updateGPSDiagnostics();
@@ -93,7 +95,7 @@ void startTimeTracklog() {
   int    trackInt  = Integer.parseInt(trackText);
 
   if (trackInt <= 0) {
-      showToast("Please enter a positive number in the 'Tracking Distance Interval' field");
+      showToast("Please enter a positive number in the 'Tracklog Time Interval (s)' field");
     } else if(isInternalGPSOn() || isExternalGPSOn()) {
         showToast("Tracklog enabled. Tracklog time interval set to " + trackText + " seconds.");
         startTrackingGPS("time", trackInt, "saveGPSTrack()");
@@ -182,7 +184,7 @@ void saveGPSTrack() {
                                         }
                                     });
                                 }
-                                updateTrackStatus();
+                                updateTracklogStatus();
                             }
                         });
                     }
