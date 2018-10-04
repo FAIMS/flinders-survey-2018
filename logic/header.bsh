@@ -15,4 +15,4 @@ final String SURVEY_UNIT_TAB_REF = "Survey_Unit";
 final String SURVEY_UNIT_TAB_REF_FULL = SURVEY_UNIT_TAB_GROUP_REF + "/" + SURVEY_UNIT_TAB_REF;
 
 
-final String SURVEY_UNIT_TRACKLOG_STATUS_REF = SURVEY_UNIT_TAB_REF_FULL + "/" + "Track_Log_Status";
+final String SURVEY_UNIT_TRACKLOG_STATUS_REF = SURVEY_UNIT_TAB_REF_FULL + "/" + "Tracklog_Status";

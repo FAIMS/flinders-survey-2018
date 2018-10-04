@@ -22,9 +22,16 @@ final String ENABLE_TRACKLOG_TIME_BUTTON_REF = CONTROL_TAB_REF_FULL + "/Tracklog
 final String TURN_OFF_TRACKLOG_BUTTON_REF = CONTROL_TAB_REF_FULL + "/Tracklog_Off";
 
 int curNumTracklogPoints = 0;
-int numTransectPoints = 0;
+int curNumTransectPoints = 0;
 
-String tracklogState = "Stop";
+// The possible state of the tracklog.
+final String TRACKLOG_STATE_TIME = "Time";
+final String TRACKLOG_STATE_DIST = "Distance";
+final String TRACKLOG_STATE_STOP = "Stopped";
+final String TRACKLOG_STATE_BAD_GPS_FIX = "Bad GPS Fix";
+
+// Default state of the tracklog is stopped.
+String tracklogState = TRACKLOG_STATE_STOP;
 
 String tracklogStatus = "Tracklog is stopped";
 
@@ -42,28 +49,25 @@ void setGpsInternalExternal() {
 }
 
 void updateTracklogStatus() {
-  if (tracklogState.equals("Time")) {
+  if (tracklogState.equals(TRACKLOG_STATE_TIME)) {
       tracklogStatus = "Tracklog Started - Time: "+getFieldValue(TRACKLOG_TIME_INTERVAL_REF)+"s";
-  } else if (tracklogState.equals("Distance")) {
+  } else if (tracklogState.equals(TRACKLOG_STATE_DIST)) {
       tracklogStatus = "Tracklog Started - Distance: "+getFieldValue(TRACKLOG_DISTANCE_INTERVAL_REF)+"m";
   } else {
-      tracklogStatus = "Tracklog is "+tracklogState;
+      tracklogStatus = "Tracklog off";
   }
 
 
   if (curNumTracklogPoints > 0) {
       tracklogStatus += "\nNumber Tracklog Points collected: "+curNumTracklogPoints;
   }
-  if (numTransectPoints > 0) {
-      tracklogStatus += "\nNumber current transect Points collected: "+numTransectPoints;
+  if (curNumTransectPoints > 0) {
+      tracklogStatus += "\nNumber current transect Points collected: "+curNumTransectPoints;
   }
 
   tracklogStatus += "\nCurrent GPS Estimated Accuracy: "+ getGPSEstimatedAccuracy();
 
-
-
   setFieldValue(TRACKLOG_STATUS_REF, tracklogStatus);
-
   setFieldValue(SURVEY_UNIT_TRACKLOG_STATUS_REF, tracklogStatus);
 }
 
@@ -105,7 +109,7 @@ void startDistanceTracklog() {
     if (trackInt <= 0) {
      showToast("Please enter a positive number in the 'Tracklog Distance Interval (m)' field");
     } else if(isInternalGPSOn() || isExternalGPSOn()) {
-        tracklogState = "Distance";
+        tracklogState = TRACKLOG_STATE_DIST;
         showToast("Tracklog enabled. Tracklog distance interval set to " + trackText + " metres.");
         startTrackingGPS("distance", trackInt, "saveGPSTrack()");
         updateGPSDiagnostics();
@@ -124,7 +128,7 @@ void startTimeTracklog() {
   if (trackInt <= 0) {
       showToast("Please enter a positive number in the 'Tracklog Time Interval (s)' field");
     } else if(isInternalGPSOn() || isExternalGPSOn()) {
-        tracklogState = "Time";
+        tracklogState = TRACKLOG_STATE_TIME;
         showToast("Tracklog enabled. Tracklog time interval set to " + trackText + " seconds.");
         startTrackingGPS("time", trackInt, "saveGPSTrack()");
         updateGPSDiagnostics();
@@ -137,8 +141,8 @@ void startTimeTracklog() {
 void stopTracklog() {
     stopTrackingGPS();
     curNumTracklogPoints = 0;
-    numTransectPoints = 0;
-    tracklogState = "Stopped";
+    curNumTransectPoints = 0;
+    tracklogState = TRACKLOG_STATE_STOP;
     showToast("Tracklog disabled.");
     updateTracklogStatus();
 }
@@ -158,7 +162,7 @@ void saveGPSTrack() {
         onFetch(teamQueryResult) {
             position = getGPSPosition();
             if (position == null) {
-                tracklogState = "Bad GPS Fix";
+                tracklogState = TRACKLOG_STATE_BAD_GPS_FIX;
                 return;
             }
             positionProj = getGPSPositionProjected();
@@ -191,7 +195,7 @@ void saveGPSTrack() {
                   /*
 
                     if (transectEnabled) {
-                        numTransectPoints++;
+                        curNumTransectPoints++;
                         attributes.add(createEntityAttribute("SUID", getFieldValue(surveyUnitIdRef), null, null, null));
                         attributes.add(createEntityAttribute("Width", getFieldValue(surveyUnitTotalTransectWidthRef), null, null, null));
                         if (!stateAppend.equals("")) {
