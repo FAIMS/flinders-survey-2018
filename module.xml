@@ -178,6 +178,7 @@
         <!--@SOURCE: logic/custom-search.bsh-->
         <!--@SOURCE: logic/user-tab-validation.bsh-->
         <!--@SOURCE: logic/tracklog.bsh-->
+        <!--@SOURCE: logic/new-survey-unit.bsh-->
 		    <!--@SOURCE: logic/sync-disable.bsh-->
         ]]>
     </logic>

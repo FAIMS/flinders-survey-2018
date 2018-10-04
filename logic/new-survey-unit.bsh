@@ -1,0 +1,40 @@
+/**************************** NEW SURVEY UNIT ******************************/
+
+// Override newSurveyUnit(String parent) method that has been provided by the
+// autogen.
+void newSurveyUnit(String parent){
+  if (transectEnabled) {
+        showWarning("Already tracking!", "You are already in a Survey Unit! Loading it now.");
+        loadSurveyUnitFrom(survey_unit_id);
+        return;
+    }
+  position = getGPSPosition();
+  if (position == null) {
+      showWarning("Warning", "Your GPS is not initialized, you cannot create a Survey Unit until the GPS icon is blue.");
+      return;
+  }
+
+  curNumTransectPoints = 0;
+  survey_unit_id = null;
+  stateAppend = SURVEY_UNIT_STATE_START;
+  transectEnabled = true;
+
+  String tabgroup = "Survey_Unit";
+  if (!isNull(parent)) {
+    triggerAutoSave();
+    parentTabgroup   = parent;
+    parentTabgroup__ = parent;
+  }
+  if (isNull("Control/Next_IDs/Next_Survey_Unit_ID")) {
+    showWarning("{Alert}", "{A_next_ID_has_not_been_entered_please_provide_one}");
+    return;
+  }
+
+  setUuid(tabgroup, null);
+  newTabGroup(tabgroup);
+  populateAuthorAndTimestamp(tabgroup);
+  populateEntityListsInTabGroup(tabgroup);
+  incAutoNum("Survey_Unit/Survey_Unit/Survey_Unit_ID");
+
+  executeOnEvent(tabgroup, "create");
+}

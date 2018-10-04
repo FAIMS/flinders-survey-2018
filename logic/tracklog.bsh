@@ -1,3 +1,4 @@
+/********************************** TRACKLOG **********************************/
 // GPS refresh rate field ref
 final String GPS_REFRESH_RATE_REF = CONTROL_TAB_REF_FULL + "/GPS_Refresh_Rate";
 // Tracklog Interval Ref
@@ -23,6 +24,8 @@ final String TURN_OFF_TRACKLOG_BUTTON_REF = CONTROL_TAB_REF_FULL + "/Tracklog_Of
 
 int curNumTracklogPoints = 0;
 int curNumTransectPoints = 0;
+String survey_unit_id = null;
+String stateAppend = "";
 
 // The possible state of the tracklog.
 final String TRACKLOG_STATE_TIME = "Time";
@@ -30,10 +33,16 @@ final String TRACKLOG_STATE_DIST = "Distance";
 final String TRACKLOG_STATE_STOP = "Stopped";
 final String TRACKLOG_STATE_BAD_GPS_FIX = "Bad GPS Fix";
 
+final String SURVEY_UNIT_STATE_START = "Start";
+final String SURVEY_UNIT_STATE_END = "End";
+
+
 // Default state of the tracklog is stopped.
 String tracklogState = TRACKLOG_STATE_STOP;
 
 String tracklogStatus = "Tracklog is stopped";
+
+boolean transectEnabled = false;
 
 void initAndPersistOverSessions(String ref, String defaultVal) {
   setFieldValue(ref, defaultVal);
@@ -110,7 +119,7 @@ void startDistanceTracklog() {
 
     if (trackInt <= 0) {
      showToast("Please enter a positive number in the 'Tracklog Distance Interval (m)' field");
-    } else if(isInternalGPSOn() || isExternalGPSOn()) {
+    } else if(isGPSOn()) {
         tracklogState = TRACKLOG_STATE_DIST;
         showToast("Tracklog enabled. Tracklog distance interval set to " + trackText + " metres.");
         startTrackingGPS("distance", trackInt, "saveGPSTrack()");
@@ -129,7 +138,7 @@ void startTimeTracklog() {
 
   if (trackInt <= 0) {
       showToast("Please enter a positive number in the 'Tracklog Time Interval (s)' field");
-    } else if(isInternalGPSOn() || isExternalGPSOn()) {
+    } else if(isGPSOn()) {
         tracklogState = TRACKLOG_STATE_TIME;
         showToast("Tracklog enabled. Tracklog time interval set to " + trackText + " seconds.");
         startTrackingGPS("time", trackInt, "saveGPSTrack()");
@@ -190,6 +199,7 @@ void saveGPSTrack() {
             l.add(p);
 
             String surveyUnitIdRef = SURVEY_UNIT_TAB_REF_FULL + "/Survey_Unit_ID";
+            Log.d("surveyUnit", "Class: " + getFieldValue(surveyUnitIdRef).getClass() + " Value:  " + getFieldValue(surveyUnitIdRef) );
             String surveyUnitTotalTransectWidthRef = SURVEY_UNIT_TAB_REF_FULL + "/Total_Transect_Width";
             saveArchEnt(null, "Tracklog", l, attributes, new SaveCallback() {
                 onSave(uuid, newRecord) {
@@ -231,6 +241,18 @@ void saveGPSTrack() {
 
         }
     });
+}
+
+drawSurveyUnit() {
+    fetchOne("update archentity set geospatialcolumn = (select casttogeometrycollection(geom) " +
+            "from ( " +
+            "select makeline(transform(geospatialcolumn, 4326)) as geom " +
+              "from (select * from latestnondeletedarchent join aenttype using (aenttypeid) join latestnondeletedaentreln using (uuid) where aenttypename = 'Transect' order by uuid) Transect  " +
+              "join (select uuid, relationshipid from latestnondeletedarchent join aenttype using (aenttypeid) join latestnondeletedaentreln using (uuid)  where aenttypename = 'Survey Unit' ) survey_unit using (relationshipid)  " +
+              "join (select uuid, measure from latestnondeletedaentvalue join attributekey using (attributeid) where attributename = 'Total Transect Width (m)' )   " +
+             "where survey_unit.uuid = " + survey_unit_id + "  " +
+             "group by survey_unit.uuid) " +
+             ") where uuid = " + survey_unit_id + " and aenttimestamp = (select aenttimestamp from latestnondeletedarchent where uuid = " + survey_unit_id + ");", null);
 }
 
 
