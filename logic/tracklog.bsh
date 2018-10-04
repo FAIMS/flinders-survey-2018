@@ -49,14 +49,16 @@ void setGpsInternalExternal() {
 }
 
 void updateTracklogStatus() {
-  if (tracklogState.equals(TRACKLOG_STATE_TIME)) {
-      tracklogStatus = "Tracklog Started - Time: "+getFieldValue(TRACKLOG_TIME_INTERVAL_REF)+"s";
-  } else if (tracklogState.equals(TRACKLOG_STATE_DIST)) {
-      tracklogStatus = "Tracklog Started - Distance: "+getFieldValue(TRACKLOG_DISTANCE_INTERVAL_REF)+"m";
-  } else {
+  switch(tracklogState) {
+    case TRACKLOG_STATE_TIME:
+      tracklogStatus = "Tracklog started - Time interval: "+getFieldValue(TRACKLOG_TIME_INTERVAL_REF)+"s";
+      break;
+    case TRACKLOG_STATE_DIST:
+      tracklogStatus = "Tracklog started - Distance interval: "+getFieldValue(TRACKLOG_DISTANCE_INTERVAL_REF)+"m";
+      break;
+    default:
       tracklogStatus = "Tracklog off";
   }
-
 
   if (curNumTracklogPoints > 0) {
       tracklogStatus += "\nNumber Tracklog Points collected: "+curNumTracklogPoints;
