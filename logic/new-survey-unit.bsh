@@ -2,22 +2,28 @@
 
 // Override newSurveyUnit(String parent) method that has been provided by the
 // autogen.
+// The method checks if user is already tracking, if so then load the current
+// survey unit. User can only create new survey unit if gps position is on.
+// Before creating new survey unit, set current survey unit state to start and
+// transectEnabled to true.
 void newSurveyUnit(String parent){
+  survey_unit_id = getUuid(SURVEY_UNIT_TAB_GROUP_REF);
   if (transectEnabled) {
         showWarning("Already tracking!", "You are already in a Survey Unit! Loading it now.");
+        Log.d("FAIMS", "Inside surveyUnit transectEnabled, survey_unit_id:" + survey_unit_id);
         loadSurveyUnitFrom(survey_unit_id);
         return;
     }
-  position = getGPSPosition();
-  if (position == null) {
-      showWarning("Warning", "Your GPS is not initialized, you cannot create a Survey Unit until the GPS icon is blue.");
-      return;
+  // If GPS position is null, return.
+  if(!GPSPositionNotNull()) {
+    showWarning("Warning", "Your GPS is not initialized, you cannot create a Survey Unit until the GPS icon is blue.");
+    return;
   }
 
-  curNumTransectPoints = 0;
-  survey_unit_id = null;
-  stateAppend = SURVEY_UNIT_STATE_START;
-  transectEnabled = true;
+  resetCurrentNumOfTransectPoint();
+  Log.d("FAIMS", "Assign survey_unit_id:" + survey_unit_id);
+  setSurveyUnitState(SURVEY_UNIT_STATE_START);
+  enableTransect();
 
   String tabgroup = "Survey_Unit";
   if (!isNull(parent)) {

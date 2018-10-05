@@ -24,18 +24,22 @@ final String TURN_OFF_TRACKLOG_BUTTON_REF = CONTROL_TAB_REF_FULL + "/Tracklog_Of
 
 int curNumTracklogPoints = 0;
 int curNumTransectPoints = 0;
+
+// UUID of the current survey unit. Null if not inside a survey unit.
 String survey_unit_id = null;
-String stateAppend = "";
+
+// The possible state for stateAppend.
+final String SURVEY_UNIT_STATE_EMPTY = "";
+final String SURVEY_UNIT_STATE_START = "Start";
+final String SURVEY_UNIT_STATE_END = "End";
+
+String stateAppend = SURVEY_UNIT_STATE_EMPTY;
 
 // The possible state of the tracklog.
 final String TRACKLOG_STATE_TIME = "Time";
 final String TRACKLOG_STATE_DIST = "Distance";
 final String TRACKLOG_STATE_STOP = "Stopped";
 final String TRACKLOG_STATE_BAD_GPS_FIX = "Bad GPS Fix";
-
-final String SURVEY_UNIT_STATE_START = "Start";
-final String SURVEY_UNIT_STATE_END = "End";
-
 
 // Default state of the tracklog is stopped.
 String tracklogState = TRACKLOG_STATE_STOP;
@@ -204,20 +208,22 @@ void saveGPSTrack() {
             saveArchEnt(null, "Tracklog", l, attributes, new SaveCallback() {
                 onSave(uuid, newRecord) {
                   updateTracklogStatus();
-                  /*
+
 
                     if (transectEnabled) {
                         curNumTransectPoints++;
-                        attributes.add(createEntityAttribute("SUID", getFieldValue(surveyUnitIdRef), null, null, null));
-                        attributes.add(createEntityAttribute("Width", getFieldValue(surveyUnitTotalTransectWidthRef), null, null, null));
-                        if (!stateAppend.equals("")) {
-                            attributes.add(createEntityAttribute("State", stateAppend, null, null, null));
+                        // attributes.add(createEntityAttribute("SUID", getFieldValue(surveyUnitIdRef), null, null, null));
+                        // attributes.add(createEntityAttribute("Width", getFieldValue(surveyUnitTotalTransectWidthRef), null, null, null));
+                        if (!stateAppend.equals(SURVEY_UNIT_STATE_EMPTY)) {
+                            // attributes.add(createEntityAttribute("State", stateAppend, null, null, null));
                             if(stateAppend.equals("End")) {
                                 transectEnabled=false;
+                                Log.d("FAIMS", "stateAppend end -> transectEnabled is now" + transectEnabled);
                             }
-                            stateAppend = "";
+                            stateAppend = SURVEY_UNIT_STATE_EMPTY;
+                            Log.d("FAIMS", "stateAppend: " + stateAppend);
                         }
-
+                        /*
                         saveArchEnt(null, "Transect", l, attributes, new SaveCallback() {
                             onSave(uuid, newRecord) {
                                 transect_id = uuid;
@@ -233,8 +239,9 @@ void saveGPSTrack() {
                                 updateTracklogStatus();
                             }
                         });
+                        */
                     }
-                    */
+
                 }
 
             });
@@ -265,6 +272,37 @@ void initAndPersistGPSRefreshRate() {
   initAndPersistOverSessions(GPS_REFRESH_RATE_REF,   "60");
 }
 
+void setSurveyUnitState(String state) {
+  stateAppend = state;
+}
+
+void enableTransect() {
+  transectEnabled = true;
+}
+
+void disableTransect() {
+  transectEnabled = false;
+}
+
+void setCurrentNumOfTransectPoint(int n) {
+  curNumTransectPoints = n;
+}
+
+void resetCurrentNumOfTransectPoint() {
+  setCurrentNumOfTransectPoint(0);
+}
+
+void setCurrentSurveyUnitToNull() {
+  survey_unit_id = null;
+}
+
+// If GPS position is null, return false, else return true.
+boolean GPSPositionNotNull() {
+  if(getGPSPosition() == null) {
+    return false;
+  }
+  return true;
+}
 
 setGpsInternalExternal();
 

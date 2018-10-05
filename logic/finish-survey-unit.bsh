@@ -1,0 +1,14 @@
+/**************************** FINISH SURVEY UNIT ******************************/
+final String FINISH_SURVEY_UNIT_BUTTON_REF = SURVEY_UNIT_TAB_REF_FULL + "/Finish_Survey_Unit";
+finishSurveyUnit() {
+    if (!GPSPositionNotNull()) {
+        showWarning("Warning", "You have lost your GPS signal, please wait until the GPS icon is blue before you finish you Survey Unit.");
+        return;
+    }
+    stateAppend = SURVEY_UNIT_STATE_END;
+    Log.d("FAIMS", "finishSurveyUnit stateAppend is: " + stateAppend);
+    saveGPSTrack();
+    cancelTabGroup("Survey_Unit", false);
+}
+
+addOnEvent(FINISH_SURVEY_UNIT_BUTTON_REF, "click", "finishSurveyUnit()");
